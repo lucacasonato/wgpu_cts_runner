@@ -17,6 +17,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install GPU stuff
+      run: |
+        sudo apt-get update -y -qq
+        sudo add-apt-repository ppa:kisak/kisak-mesa -y
+        sudo apt-get update
+        sudo apt install -y libxcb-xfixes0-dev mesa-vulkan-drivers
+
     - name: Cache
       uses: actions/cache@v2
       with:
