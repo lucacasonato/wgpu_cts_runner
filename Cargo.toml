@@ -1,0 +1,25 @@
+[package]
+name = "wgpu_cts_runner"
+version = "0.1.0"
+authors = ["Luca Casonato <hello@lcas.dev>"]
+edition = "2018"
+publish = false
+
+[dependencies]
+deno_console = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_core = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_web = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_url = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_webidl = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_webgpu = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+tokio = { version = "1.6.1", features = ["full"] }
+termcolor = "1.1.2"
+
+[build-dependencies]
+deno_console = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_core = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_web = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_url = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_webidl = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_webgpu = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+tokio = { version = "1.6.1", features = ["full"] }
