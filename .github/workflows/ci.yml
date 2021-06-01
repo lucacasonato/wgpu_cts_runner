@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          .cargo_home
+          target/*/.*
+          target/*/build
+          target/*/deps
+        key: backend-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+        restore-keys: backend-${{ runner.os }}-
+
+    - name: Build
+      run: cargo build --verbose
+
+    - name: Test hello-compute
+      run: ./target/debug/wgpu_cts_runner examples/hello-compute.js
