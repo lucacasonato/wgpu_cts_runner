@@ -7,6 +7,7 @@ use deno_core::error::AnyError;
 use deno_core::futures::StreamExt;
 use deno_core::resolve_url_or_path;
 use deno_core::JsRuntime;
+use deno_core::OpState;
 use deno_core::RuntimeOptions;
 use deno_core::Snapshot;
 use termcolor::Ansi;
@@ -36,14 +37,21 @@ async fn run() -> Result<(), AnyError> {
     extensions: vec![
       deno_webidl::init(),
       deno_console::init(),
+      deno_timers::init::<deno_timers::NoTimersPermission>(),
       deno_url::init(),
       deno_web::init(),
       deno_webgpu::init(true),
+      extension(),
     ],
     ..Default::default()
   };
   let mut isolate = JsRuntime::new(options);
   isolate.execute("<anon>", "globalThis.bootstrap()")?;
+
+  isolate
+    .op_state()
+    .borrow_mut()
+    .put(deno_timers::NoTimersPermission);
 
   let mod_id = isolate.load_module(&specifier, None).await?;
   let mut rx = isolate.mod_evaluate(mod_id);
@@ -62,6 +70,16 @@ async fn run() -> Result<(), AnyError> {
   rx.await.unwrap()?;
 
   Ok(())
+}
+
+fn extension() -> deno_core::Extension {
+  deno_core::Extension::builder()
+    .ops(vec![("op_exit", deno_core::op_sync(op_exit))])
+    .build()
+}
+
+fn op_exit(_state: &mut OpState, code: i32, _: ()) -> Result<(), AnyError> {
+  std::process::exit(code)
 }
 
 fn get_error_class_name(e: &AnyError) -> &'static str {

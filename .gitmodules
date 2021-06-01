@@ -1,0 +1,4 @@
+[submodule "cts"]
+	path = cts
+	url = https://github.com/gpuweb/cts.git
+	branch = gh-pages

@@ -206,6 +206,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "deno_timers"
+version = "0.5.1"
+source = "git+https://github.com/denoland/deno?rev=9ae8dbf17334f1cf7ae09abf585d8797f374bdc4#9ae8dbf17334f1cf7ae09abf585d8797f374bdc4"
+dependencies = [
+ "deno_core",
+ "tokio",
+]
+
+[[package]]
 name = "deno_url"
 version = "0.7.1"
 source = "git+https://github.com/denoland/deno?rev=9ae8dbf17334f1cf7ae09abf585d8797f374bdc4#9ae8dbf17334f1cf7ae09abf585d8797f374bdc4"
@@ -1359,6 +1368,7 @@ version = "0.1.0"
 dependencies = [
  "deno_console",
  "deno_core",
+ "deno_timers",
  "deno_url",
  "deno_web",
  "deno_webgpu",

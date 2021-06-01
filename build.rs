@@ -23,6 +23,7 @@ fn main() {
       deno_console::init(),
       deno_url::init(),
       deno_web::init(),
+      deno_timers::init::<deno_timers::NoTimersPermission>(),
       deno_webgpu::init(true),
       ctsr_extension,
     ],

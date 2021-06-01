@@ -8,6 +8,7 @@ publish = false
 [dependencies]
 deno_console = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_core = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_timers = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_web = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_url = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_webidl = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
@@ -18,6 +19,7 @@ termcolor = "1.1.2"
 [build-dependencies]
 deno_console = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_core = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
+deno_timers = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_web = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_url = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
 deno_webidl = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }

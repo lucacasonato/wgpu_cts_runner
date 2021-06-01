@@ -11,10 +11,18 @@ delete Object.prototype.__proto__;
   const eventTarget = window.__bootstrap.eventTarget;
   const globalInterfaces = window.__bootstrap.globalInterfaces;
   const { Console } = window.__bootstrap.console;
+  const timers = window.__bootstrap.timers;
   const url = window.__bootstrap.url;
   const webgpu = window.__bootstrap.webgpu;
 
   const util = {
+    immutableDefine(o, p, value) {
+      Object.defineProperty(o, p, {
+        value,
+        configurable: false,
+        writable: false,
+      });
+    },
     writable(value) {
       return {
         value,
@@ -81,6 +89,15 @@ delete Object.prototype.__proto__;
     atob: util.writable(atob),
     btoa: util.writable(btoa),
     console: util.writable(new Console(core.print)),
+    setInterval: util.writable(timers.setInterval),
+    setTimeout: util.writable(timers.setTimeout),
+    clearInterval: util.writable(timers.clearInterval),
+    clearTimeout: util.writable(timers.clearTimeout),
+    performance: util.writable({
+      now() {
+        return new Date().getTime();
+      },
+    }),
 
     GPU: util.nonEnumerable(webgpu.GPU),
     GPUAdapter: util.nonEnumerable(webgpu.GPUAdapter),
@@ -122,6 +139,12 @@ delete Object.prototype.__proto__;
     self: util.readOnly(globalThis),
   };
 
+  const denoNs = {
+    exit(code) {
+      core.opSync("op_exit", code);
+    },
+  };
+
   function registerErrors() {
     core.registerErrorBuilder(
       "DOMExceptionOperationError",
@@ -147,6 +170,9 @@ delete Object.prototype.__proto__;
     Object.defineProperties(globalThis, mainRuntimeGlobalProperties);
     Object.setPrototypeOf(globalThis, Window.prototype);
     eventTarget.setEventTargetData(globalThis);
+
+    util.immutableDefine(globalThis, "Deno", denoNs);
+    Object.freeze(globalThis.Deno);
 
     core.ops();
     Error.prepareStackTrace = core.createPrepareStackTrace();
