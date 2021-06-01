@@ -61,13 +61,6 @@ delete Object.prototype.__proto__;
     },
   });
 
-  core.registerErrorBuilder(
-    "DOMExceptionOperationError",
-    function DOMExceptionOperationError(msg) {
-      return new DOMException(msg, "OperationError");
-    },
-  );
-
   const windowOrWorkerGlobalScope = {
     CloseEvent: util.nonEnumerable(CloseEvent),
     CustomEvent: util.nonEnumerable(CustomEvent),
@@ -129,6 +122,15 @@ delete Object.prototype.__proto__;
     self: util.readOnly(globalThis),
   };
 
+  function registerErrors() {
+    core.registerErrorBuilder(
+      "DOMExceptionOperationError",
+      function DOMExceptionOperationError(msg) {
+        return new DOMException(msg, "OperationError");
+      },
+    );
+  }
+
   let hasBootstrapped = false;
 
   function bootstrapRuntime() {
@@ -138,6 +140,8 @@ delete Object.prototype.__proto__;
     delete globalThis.__bootstrap;
     delete globalThis.bootstrap;
     hasBootstrapped = true;
+
+    registerErrors();
 
     Object.defineProperties(globalThis, windowOrWorkerGlobalScope);
     Object.defineProperties(globalThis, mainRuntimeGlobalProperties);

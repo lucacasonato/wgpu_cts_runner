@@ -32,6 +32,7 @@ async fn run() -> Result<(), AnyError> {
   let options = RuntimeOptions {
     startup_snapshot: Some(Snapshot::Static(CTSR_SNAPSHOT)),
     module_loader: Some(Rc::new(deno_core::FsModuleLoader)),
+    get_error_class_fn: Some(&get_error_class_name),
     extensions: vec![
       deno_webidl::init(),
       deno_console::init(),
@@ -61,6 +62,20 @@ async fn run() -> Result<(), AnyError> {
   rx.await.unwrap()?;
 
   Ok(())
+}
+
+fn get_error_class_name(e: &AnyError) -> &'static str {
+  deno_core::error::get_custom_error_class(e)
+    .or_else(|| deno_webgpu::error::get_error_class_name(e))
+    .unwrap_or_else(|| {
+      panic!(
+        "Error '{}' contains boxed error of unsupported type:{}",
+        e,
+        e.chain()
+          .map(|e| format!("\n  {:?}", e))
+          .collect::<String>()
+      );
+    })
 }
 
 fn unwrap_or_exit<T>(result: Result<T, AnyError>) -> T {
