@@ -2,6 +2,7 @@
 
 use deno_core::JsRuntime;
 use deno_core::RuntimeOptions;
+use deno_web::BlobStore;
 
 use std::env;
 use std::path::PathBuf;
@@ -22,7 +23,7 @@ fn main() {
       deno_webidl::init(),
       deno_console::init(),
       deno_url::init(),
-      deno_web::init(),
+      deno_web::init(BlobStore::default(), None),
       deno_timers::init::<deno_timers::NoTimersPermission>(),
       deno_webgpu::init(true),
       ctsr_extension,

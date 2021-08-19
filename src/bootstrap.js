@@ -7,17 +7,27 @@ delete Object.prototype.__proto__;
 
 ((window) => {
   const core = Deno.core;
+  const {
+    Error,
+    ObjectDefineProperty,
+    ObjectDefineProperties,
+    Symbol,
+  } = window.__bootstrap.primordials;
   const webidl = window.__bootstrap.webidl;
   const eventTarget = window.__bootstrap.eventTarget;
   const globalInterfaces = window.__bootstrap.globalInterfaces;
   const { Console } = window.__bootstrap.console;
   const timers = window.__bootstrap.timers;
+  const base64 = window.__bootstrap.base64;
+  const encoding = window.__bootstrap.encoding;
   const url = window.__bootstrap.url;
+  const domException = window.__bootstrap.domException;
+  const performance = window.__bootstrap.performance;
   const webgpu = window.__bootstrap.webgpu;
 
   const util = {
     immutableDefine(o, p, value) {
-      Object.defineProperty(o, p, {
+      ObjectDefineProperty(o, p, {
         value,
         configurable: false,
         writable: false,
@@ -58,7 +68,7 @@ delete Object.prototype.__proto__;
 
   const navigator = webidl.createBranded(Navigator);
 
-  Object.defineProperties(Navigator.prototype, {
+  ObjectDefineProperties(Navigator.prototype, {
     gpu: {
       configurable: true,
       enumerable: true,
@@ -72,7 +82,7 @@ delete Object.prototype.__proto__;
   const windowOrWorkerGlobalScope = {
     CloseEvent: util.nonEnumerable(CloseEvent),
     CustomEvent: util.nonEnumerable(CustomEvent),
-    DOMException: util.nonEnumerable(DOMException),
+    DOMException: util.nonEnumerable(domException.DOMException),
     ErrorEvent: util.nonEnumerable(ErrorEvent),
     Event: util.nonEnumerable(Event),
     EventTarget: util.nonEnumerable(EventTarget),
@@ -82,22 +92,22 @@ delete Object.prototype.__proto__;
       enumerable: true,
       get: () => navigator,
     },
-    TextDecoder: util.nonEnumerable(TextDecoder),
-    TextEncoder: util.nonEnumerable(TextEncoder),
+    Performance: util.nonEnumerable(performance.Performance),
+    PerformanceEntry: util.nonEnumerable(performance.PerformanceEntry),
+    PerformanceMark: util.nonEnumerable(performance.PerformanceMark),
+    PerformanceMeasure: util.nonEnumerable(performance.PerformanceMeasure),
+    TextDecoder: util.nonEnumerable(encoding.TextDecoder),
+    TextEncoder: util.nonEnumerable(encoding.TextEncoder),
     URL: util.nonEnumerable(url.URL),
     URLSearchParams: util.nonEnumerable(url.URLSearchParams),
-    atob: util.writable(atob),
-    btoa: util.writable(btoa),
+    atob: util.writable(base64.atob),
+    btoa: util.writable(base64.btoa),
     console: util.writable(new Console(core.print)),
     setInterval: util.writable(timers.setInterval),
     setTimeout: util.writable(timers.setTimeout),
     clearInterval: util.writable(timers.clearInterval),
     clearTimeout: util.writable(timers.clearTimeout),
-    performance: util.writable({
-      now() {
-        return new Date().getTime();
-      },
-    }),
+    performance: util.writable(performance.performance),
 
     GPU: util.nonEnumerable(webgpu.GPU),
     GPUAdapter: util.nonEnumerable(webgpu.GPUAdapter),
@@ -178,7 +188,7 @@ delete Object.prototype.__proto__;
     Error.prepareStackTrace = core.createPrepareStackTrace();
   }
 
-  Object.defineProperties(globalThis, {
+  ObjectDefineProperties(globalThis, {
     bootstrap: {
       value: bootstrapRuntime,
       configurable: true,

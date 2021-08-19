@@ -4,12 +4,13 @@ use std::rc::Rc;
 
 use deno_core::error::anyhow;
 use deno_core::error::AnyError;
-use deno_core::futures::StreamExt;
+use deno_core::located_script_name;
 use deno_core::resolve_url_or_path;
 use deno_core::JsRuntime;
 use deno_core::OpState;
 use deno_core::RuntimeOptions;
 use deno_core::Snapshot;
+use deno_web::BlobStore;
 use termcolor::Ansi;
 use termcolor::Color::Red;
 use termcolor::ColorSpec;
@@ -39,14 +40,14 @@ async fn run() -> Result<(), AnyError> {
       deno_console::init(),
       deno_timers::init::<deno_timers::NoTimersPermission>(),
       deno_url::init(),
-      deno_web::init(),
+      deno_web::init(BlobStore::default(), None),
       deno_webgpu::init(true),
       extension(),
     ],
     ..Default::default()
   };
   let mut isolate = JsRuntime::new(options);
-  isolate.execute("<anon>", "globalThis.bootstrap()")?;
+  isolate.execute_script(&located_script_name!(), "globalThis.bootstrap()")?;
 
   isolate
     .op_state()
@@ -54,15 +55,12 @@ async fn run() -> Result<(), AnyError> {
     .put(deno_timers::NoTimersPermission);
 
   let mod_id = isolate.load_module(&specifier, None).await?;
-  let mut rx = isolate.mod_evaluate(mod_id);
+  let rx = isolate.mod_evaluate(mod_id);
 
   let rx = tokio::spawn(async move {
-    loop {
-      match rx.next().await {
-        Some(Ok(())) => (),
-        Some(err @ Err(_)) => return err,
-        None => return Ok(()),
-      }
+    match rx.await {
+      Ok(err @ Err(_)) => return err,
+      _ => return Ok(()),
     }
   });
 

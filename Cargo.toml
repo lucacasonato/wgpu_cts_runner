@@ -6,22 +6,22 @@ edition = "2018"
 publish = false
 
 [dependencies]
-deno_console = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_core = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_timers = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_web = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_url = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_webidl = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_webgpu = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-tokio = { version = "1.6.1", features = ["full"] }
+deno_console = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_core = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_timers = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_url = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_web = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_webidl = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_webgpu = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+tokio = { version = "1.10.0", features = ["full"] }
 termcolor = "1.1.2"
 
 [build-dependencies]
-deno_console = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_core = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_timers = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_web = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_url = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_webidl = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-deno_webgpu = { git = "https://github.com/denoland/deno", rev = "9ae8dbf17334f1cf7ae09abf585d8797f374bdc4" }
-tokio = { version = "1.6.1", features = ["full"] }
+deno_console = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_core = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_timers = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_url = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_web = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_webidl = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+deno_webgpu = { git = "https://github.com/denoland/deno", rev = "91051047cc82e6074348d17414854efb906019d2" }
+tokio = { version = "1.10.0", features = ["full"] }
